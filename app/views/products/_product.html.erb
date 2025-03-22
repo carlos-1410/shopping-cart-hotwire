@@ -1,0 +1,29 @@
+<turbo-frame id="product_<%= product.id %>" data-controller="products">
+  <div class="row align-items-center">
+    <div class="col-12 col-md-2 text-center mb-2 mb-md-0">
+      <% if product.image.attached? %>
+        <%= image_tag product.image.variant(resize_to_fit: [150, 250]), data: { action: "load->product#imageLoaded", turbo_frame: "_top" } %>
+      <% end %>
+    </div>
+
+    <div class="col-12 col-md-4 h-100 justify-xs-center text-center text-md-start d-flex align-items-center">
+      <p class='mb-0'><%= "#{product.name}, #{product.vendor}" %></p>
+    </div>
+
+    <div class="col-12 col-md-2 d-flex flex-column align-items-center items-center mt-md-0">
+      <p class="text-lg fw-bold mt-3"><%= number_to_currency cents_to_amount(product.price), unit: "$" %></p>
+    </div>
+
+    <div class="col-12 col-md-4 text-center d-flex justify-content-end gap-2">
+      <%= button_to "Add to cart", cart_items_path, method: :post, params: { product_id: product.id }, class: "btn btn-light", data: { turbo_frame: "cart" } %>
+      <%= link_to edit_product_path(product.id), class: "btn btn-sm btn-light ml-1", title: "Edit product", data: { turbo_frame: "product_#{product.id}" } do %>
+        <%= fa_icon "pencil" %>
+      <% end %>
+      <%= link_to product, class: "btn btn-sm btn-light ml-1", title: "Remove product", data: { confirm: "Do you really want to remove this product?" }, method: :delete do %>
+        <%= fa_icon "trash" %>
+      <% end %>
+    </div>
+
+    <hr class="text-secondary w-100 mt-2" />
+  </div>
+</turbo-frame>

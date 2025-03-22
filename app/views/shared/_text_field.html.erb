@@ -1,0 +1,20 @@
+<div class="mb-3" data-controller="field-errors">
+  <%= form.label name, class: "form-label" %>
+
+  <% if name.to_s.include?("price") %>
+    <%= form.text_field :price_in_dollars,
+        class: "form-control",
+        value: form.object.send(name) ? cents_to_amount(form.object.send(name)) : nil,
+        placeholder: "Price in dollars",
+        data: { field_errors_target: "input" } %>
+  <% else %>
+    <%= form.text_field name,
+        class: "form-control",
+        placeholder: name,
+        data: { field_errors_target: "input" } %>
+  <% end %>
+
+  <% if errors.any? %>
+    <p style="color: red" data-field-errors-target="error"><%= errors.join(", ") %></p>
+  <% end %>
+</div>

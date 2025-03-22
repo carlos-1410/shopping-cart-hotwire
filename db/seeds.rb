@@ -1,0 +1,6 @@
+speaker = Product.find_or_create_by!(name: "Wireless speaker", vendor: "Goodyear", price: 10000)
+speaker.image.attach(io: File.open(Rails.root.join("app/assets/images/wireless_speaker.png")), filename: "wireless_speker.png")
+home_suit = Product.find_or_create_by!(name: "Women's Home Suit", vendor: "Sweet Dreams", price: 2500)
+home_suit.image.attach(io: File.open(Rails.root.join("app/assets/images/womens_home_suit.png")), filename: "womens_home_suit.png")
+raincoat = Product.find_or_create_by!(name: "Raincoat", vendor: "SwissOak", price: 5000)
+raincoat.image.attach(io: File.open(Rails.root.join("app/assets/images/raincoat.png")), filename: "raincoat.png")

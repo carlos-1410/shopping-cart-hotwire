@@ -1,0 +1,30 @@
+<div class="container w-75 position-relative">
+  <div class="row mb-5">
+    <div class="col-6">
+        <h2 class="text-2xl font-bold">Products</h2>
+    </div>
+    <div class="col-6 d-flex justify-content-end align-items-center gap-2">
+        <%= link_to cart_path, class: "btn btn-light", title: "Go to your cart" do %>
+          <i class="fa fa-shopping-cart"></i>
+        <% end %>
+        <%= link_to new_product_path, data: { turbo_frame: "new_product" }, class: "btn btn-success", title: "Add a new product" do %>
+          <i class="fa fa-plus"></i>
+        <% end %>
+    </div>
+  </div>
+
+  <%= turbo_frame_tag "products" do %>
+    <div class="container">
+
+      <%= turbo_frame_tag "new_product" %>
+
+      <% if @products.any? %>
+        <% @products.each do |product| %>
+          <%= render product %>
+        <% end %>
+      <% else %>
+        <%= render partial: "products/empty_state" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

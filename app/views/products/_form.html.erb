@@ -1,0 +1,33 @@
+<%= turbo_frame_tag product.new_record? ? "new_product" : dom_id(product) do %>
+  <%= form_with model: product, data: { turbo_frame: "products" }, class: "needs-validation" do |form| %>
+    <div class="row align-items-center mb-3">
+      <div class="col-12 col-md-2 text-center mb-2 mb-md-0" data-controller="image-preview">
+          <%= form.file_field :image, class: "form-control", accept: "image/*", data: { image_preview_target: "input" } %>
+          <img
+            id="image-preview"
+            src="<%= product.product_image %>"
+            class="img-fluid rounded mt-2"
+            style="max-width: 100%; height: auto; display: <%= product.image.attached? ? 'block' : 'none' %>;"
+            data-image-preview-target="preview"
+            data-preview-url=""
+          />
+      </div>
+
+      <div class="col-12 col-md-4 d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start gap-2">
+        <%= render "shared/text_field", form: form, name: :vendor, type: "text", errors: product.errors[:vendor] %>
+        <%= render "shared/text_field", form: form, name: :name, type: "text", errors: product.errors[:name] %>
+      </div>
+
+      <div class="col-12 col-md-2 d-flex justify-content-center justify-content-md-start mt-2 mt-md-0">
+        <%= render "shared/text_field", form: form, name: :price, type: "text", errors: product.errors[:price] %>
+      </div>
+
+      <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end gap-2 mt-2 mt-md-0">
+        <%= form.submit "Save", class: "btn btn-success btn-sm" %>
+        <%= link_to "Cancel", products_path, class: "btn btn-light btn-sm" %>
+      </div>
+
+      <hr class="text-secondary w-100 mt-2" />
+    </div>
+  <% end %>
+<% end %>
