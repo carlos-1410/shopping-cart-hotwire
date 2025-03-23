@@ -3,7 +3,8 @@
 module ShoppingCart
   module CartItems
     class Upsert
-      def initialize(cart:, product_id:, quantity: 0)
+      def initialize(cart:, product_id:, quantity: 0, operation: nil)
+        @operation = operation
         @cart = cart
         @product_id = product_id
         @quantity = quantity.to_i
@@ -11,7 +12,8 @@ module ShoppingCart
 
       def call
         if cart_item.present?
-          ShoppingCart::CartItems::Update.new(cart:, cart_item:, quantity:).call
+          ShoppingCart::CartItems::Update.new(cart: cart, cart_item: cart_item,
+                                              quantity: incoming_quantity).call
         else
           return Response.failure("Invalid quantity") if quantity <= 0
 
@@ -21,7 +23,14 @@ module ShoppingCart
 
       private
 
-      attr_reader :cart, :product_id, :quantity
+      attr_reader :operation, :cart, :product_id, :quantity
+
+      # Unless the quantity is passed explicitly, e.g. from products#index, just increment it
+      def incoming_quantity
+        return quantity.to_i unless operation
+
+        operation == "increment" ? (cart_item.quantity + 1) : (cart_item.quantity - 1)
+      end
 
       def cart_item
         @cart_item ||= cart.cart_items.find_by(product_id:)

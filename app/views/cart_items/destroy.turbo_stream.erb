@@ -1,0 +1,4 @@
+<%= turbo_stream.remove "cart_item_#{@cart_item_id}" %>
+<%= turbo_stream.replace "cart_totals", partial: "cart_items/totals", locals: { cart_items: @cart.cart_items.includes(:product) } %>
+<%= turbo_stream.replace("cart", partial: "cart_items/empty_state") if @cart.reload.cart_items.empty? %>
+<%= turbo_toast(message: "The product has been removed from your cart!", type: "success") %>

@@ -1,0 +1,9 @@
+<%= turbo_stream.replace "cart_item_#{@cart_item.id}" do %>
+  <%= render partial: "cart_items/cart_item", locals: { cart_item: @cart_item } %>
+<% end %>
+
+<%= turbo_stream.replace "cart_totals" do %>
+  <%= render partial: "cart_items/totals", locals: { cart_items: @cart.cart_items.includes(:product) } %>
+<% end %>
+
+<%= turbo_toast(message: "Your cart has been updated!", type: "success") %>

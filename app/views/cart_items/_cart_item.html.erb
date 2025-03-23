@@ -1,0 +1,20 @@
+<div id="cart_item_<%= cart_item.id %>" class="mb-3">
+  <div class="row align-items-center mb-2">
+    <div class="col-12 col-md-2 text-center mb-2 mb-md-0">
+      <%= image_tag cart_item.product.product_image, class: "img-fluid rounded", loading: "lazy" if cart_item.product.image.attached? %>
+    </div>
+    <div class="col-12 col-md-4 h-100 text-center justify-xs-center text-md-start d-flex align-items-center">
+      <p class="mb-0"><%= "#{cart_item.product.name}, #{cart_item.product.vendor}" %></p>
+    </div>
+    <div class="col-12 col-md-4 text-center text-md-start mt-2 mt-sm-0">
+      <%= render partial: "cart_items/quantity", locals: { cart_item: cart_item } %>
+    </div>
+    <div class="col-12 col-md-2 d-flex flex-column align-items-center align-items-md-end mt-2 mt-sm-0">
+      <%= button_to cart_item_path(cart_item), method: :delete, data: { turbo_stream: true, turbo_confirm: "Are you sure you want to remove this item from your cart?" }, class: "btn btn-light" do %>
+        <%= fa_icon "trash" %>
+      <% end %>
+      <p><%= number_to_currency cents_to_amount(cart_item.product.price), unit: "$" %></p>
+    </div>
+  </div>
+  <hr class="text-secondary w-100 mt-2" />
+</div>

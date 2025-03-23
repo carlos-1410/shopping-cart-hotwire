@@ -31,7 +31,7 @@
 }
 
 .loader-overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -44,8 +44,12 @@
   border-radius: 8px;
 }
 
-
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+input[type="range"].form-range::-webkit-slider-thumb {
+  background-color: #198754;
+  border: none;
 }

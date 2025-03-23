@@ -1,0 +1,2 @@
+<%= turbo_stream.replace("product_#{@product.id}", partial: "products/product", locals: { product: @product }) %>
+<%= turbo_toast(message: "The product has been updated successfully!", type: "success") %>

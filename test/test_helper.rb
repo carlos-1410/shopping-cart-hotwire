@@ -6,6 +6,7 @@ require "minitest/mock"
 require "mocha/minitest"
 require "rails/test_help"
 require "./test/support/query_counter_helper"
+require "./test/support/controller_cart_patch"
 
 module ActiveSupport
   class TestCase
