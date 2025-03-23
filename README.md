@@ -1,4 +1,4 @@
-# Shopping cart app (with React.js)
+# Shopping cart app (with Hotwire)
 
 An app that allows you to add products and put them to cart.
 
@@ -12,5 +12,5 @@ An app that allows you to add products and put them to cart.
 
 In case of errors related to missing libraries, just install them. No additional configuration is required.
 
-The app is available under https://shopping-cart-react.fly.dev/
+The app is available under https://shopping-cart-hotwire.fly.dev/
 (if not, follow the above steps on your local machine)
