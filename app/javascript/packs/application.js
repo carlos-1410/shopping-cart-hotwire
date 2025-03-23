@@ -13,23 +13,29 @@
 //
 // const images = require.context('./images', true)
 // const imagePath = (name) => images(name, true)
-import Rails from "@rails/ujs";
+import Rails from '@rails/ujs';
 Rails.start();
 
 // stimulus and turbo stuff
-import { Application } from "@hotwired/stimulus";
-import "@hotwired/turbo-rails"
+import { Application } from '@hotwired/stimulus';
+import '@hotwired/turbo-rails'
 
 const application = Application.start();
 
-import ImagePreviewController from "../controllers/image_preview_controller";
-import ProductsController from "../controllers/products_controller";
-import ToastController from "../controllers/toast_controller";
-import FieldErrorsController from "../controllers/field_errors_controller";
+import ImagePreviewController from '../controllers/image_preview_controller';
+import ProductsController from '../controllers/products_controller';
+import ToastController from '../controllers/toast_controller';
+import FieldErrorsController from '../controllers/field_errors_controller';
+import QuantityController from '../controllers/quantity_controller';
+import TotalsController from '../controllers/totals_controller';
+import LoaderController from '../controllers/loader_controller';
 
-application.register("image-preview", ImagePreviewController);
-application.register("product", ProductsController);
-application.register("toast", ToastController);
-application.register("field-errors", FieldErrorsController);
+application.register('image-preview', ImagePreviewController);
+application.register('product', ProductsController);
+application.register('toast', ToastController);
+application.register('field-errors', FieldErrorsController);
+application.register('quantity', QuantityController);
+application.register('totals', TotalsController);
+application.register('loader', LoaderController);
 
 export default application;

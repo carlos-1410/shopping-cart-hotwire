@@ -1,2 +1,3 @@
 <%= turbo_stream.remove(@product) %>
+<%= turbo_stream.replace("products", partial: "products/empty_state") %>
 <%= turbo_toast(message: "The product was successfully removed!", type: "success") %>

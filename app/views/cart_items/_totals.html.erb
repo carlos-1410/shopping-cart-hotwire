@@ -1,0 +1,45 @@
+<% total_price = cart_items.sum { |item| item.quantity * item.product.price } %>
+<% total_items = cart_items.sum(&:quantity) %>
+
+<div id="cart_totals" data-controller="totals" data-totals-total-value="<%= total_price %>" data-totals-discount-value="2500">
+  <div class="p-3 mb-3 p-2 border rounded">
+    <div class="row mb-3">
+      <div class="col-8">
+        <%= total_items == 1 ? "1 item" : "#{total_items} items" %>
+      </div>
+      <div class="col-4 d-flex justify-content-end">
+        <span data-totals-target="price"><%= number_to_currency cents_to_amount(total_price) %></span>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-8">
+        <span>Move the slider to specify the discount amount</span>
+      </div>
+      <div class="col-4 d-flex justify-content-end">
+        <span class="text-success" data-totals-target="discount">
+          <%= number_to_currency cents_to_amount(2500) %>
+        </span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <input type="range" class="form-range" min="0" max="10000" step="100" value="2500" data-action="input->totals#update" />
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+      <div class="col-8 d-flex align-items-center">
+        <h5>Total</h5>
+      </div>
+      <div class="col-4 d-flex align-items-center justify-content-end">
+        <h3 data-totals-target="final">
+          <%= number_to_currency cents_to_amount(total_price - 2500) %>
+        </h3>
+      </div>
+    </div>
+  </div>
+</div>

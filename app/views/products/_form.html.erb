@@ -14,8 +14,8 @@
       </div>
 
       <div class="col-12 col-md-4 d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start gap-2">
-        <%= render "shared/text_field", form: form, name: :vendor, type: "text", errors: product.errors[:vendor] %>
         <%= render "shared/text_field", form: form, name: :name, type: "text", errors: product.errors[:name] %>
+        <%= render "shared/text_field", form: form, name: :vendor, type: "text", errors: product.errors[:vendor] %>
       </div>
 
       <div class="col-12 col-md-2 d-flex justify-content-center justify-content-md-start mt-2 mt-md-0">

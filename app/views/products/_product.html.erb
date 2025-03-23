@@ -2,7 +2,7 @@
   <div class="row align-items-center">
     <div class="col-12 col-md-2 text-center mb-2 mb-md-0">
       <% if product.image.attached? %>
-        <%= image_tag product.image.variant(resize_to_fit: [150, 250]), data: { action: "load->product#imageLoaded", turbo_frame: "_top" } %>
+        <%= image_tag product.image.variant(resize_to_fit: [150, 250]), loading: "lazy", data: { action: "load->product#imageLoaded", turbo_frame: "_top" } %>
       <% end %>
     </div>
 
@@ -15,7 +15,7 @@
     </div>
 
     <div class="col-12 col-md-4 text-center d-flex justify-content-end gap-2">
-      <%= button_to "Add to cart", cart_items_path, method: :post, params: { product_id: product.id }, class: "btn btn-light", data: { turbo_frame: "cart" } %>
+      <%= button_to "Add to cart", upsert_cart_items_path, method: :post, params: { product_id: product.id, quantity: 1, operation: "increment" }, class: "btn btn-light" %>
       <%= link_to edit_product_path(product.id), class: "btn btn-sm btn-light ml-1", title: "Edit product", data: { turbo_frame: "product_#{product.id}" } do %>
         <%= fa_icon "pencil" %>
       <% end %>

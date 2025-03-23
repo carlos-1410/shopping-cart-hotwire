@@ -53,6 +53,48 @@ module ShoppingCart
         assert_equal "Invalid quantity", response.value
         assert_nil @cart.cart_items.find_by(product_id: @product.id)
       end
+
+      test "increments quantity with 'increment' operation" do
+        cart_item = CartItem.create!(cart: @cart, product: @product, quantity: 2,
+                                     total_price: @product.price * 2)
+
+        service = ShoppingCart::CartItems::Upsert.new(cart: @cart, product_id: @product.id,
+                                                      operation: "increment")
+        response = service.call
+
+        cart_item.reload
+
+        assert response.success?
+        assert_equal 3, cart_item.quantity
+        assert_equal @product.price * 3, cart_item.total_price
+      end
+
+      test "decrements quantity with 'decrement' operation" do
+        cart_item = CartItem.create!(cart: @cart, product: @product, quantity: 3,
+                                     total_price: @product.price * 3)
+
+        service = ShoppingCart::CartItems::Upsert.new(cart: @cart, product_id: @product.id,
+                                                      operation: "decrement")
+        response = service.call
+
+        cart_item.reload
+
+        assert response.success?
+        assert_equal 2, cart_item.quantity
+        assert_equal @product.price * 2, cart_item.total_price
+      end
+
+      test "decrement destroys the item when quantity is below 0" do
+        cart_item = CartItem.create!(cart: @cart, product: @product, quantity: 1,
+                                     total_price: @product.price)
+
+        service = ShoppingCart::CartItems::Upsert.new(cart: @cart, product_id: @product.id,
+                                                      operation: "decrement")
+        response = service.call
+
+        assert response.success?
+        assert_nil CartItem.find_by(product_id: cart_item.product_id)
+      end
     end
   end
 end

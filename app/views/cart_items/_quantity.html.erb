@@ -1,0 +1,18 @@
+<div data-controller="quantity"
+     data-quantity-cart-item-id-value="<%= cart_item.id %>"
+     data-quantity-product-id-value="<%= cart_item.product_id %>"
+     data-quantity-quantity-value="<%= cart_item.quantity %>"
+     class="flex items-center">
+
+  <button type="button" class="btn btn-light" data-action="click->quantity#decrease" aria-label="decrease">
+    <i class="fa fa-minus"></i>
+  </button>
+
+  <span class="mx-3 fw-bold" data-quantity-target="display">
+    <%= cart_item.quantity %>
+  </span>
+
+  <button type="button" class="btn btn-light" data-action="click->quantity#increase" aria-label="increase">
+    <i class="fa fa-plus"></i>
+  </button>
+</div>

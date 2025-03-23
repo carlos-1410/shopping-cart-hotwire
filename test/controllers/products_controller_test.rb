@@ -24,7 +24,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
   test "edit responds with turbo_stream" do
     product = create(:product)
-  
+
     get edit_product_path(product), as: :turbo_stream
     assert_response :success
     assert_includes @response.media_type, "text/vnd.turbo-stream.html"
@@ -40,16 +40,28 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to products_path
   end
 
+  test "create responds with turbo_stream on success" do
+    product_params = attributes_for(:product).merge(price_in_dollars: 12.99)
+
+    assert_difference -> { Product.count }, +1 do
+      post products_path, params: { product: product_params }, as: :turbo_stream
+    end
+
+    assert_response :success
+    assert_match(/<turbo-stream action="prepend" target="products">/, @response.body)
+    assert_match(/<turbo-stream action="append" target="toast-container">/, @response.body)
+    assert_match(/<turbo-stream action="replace" target="new_product">/, @response.body)
+  end
+
   test "create responds with turbo_stream on failure" do
     invalid_product_params = attributes_for(:product).merge(name: nil)
-  
+
     assert_no_difference -> { Product.count } do
       post products_path, params: { product: invalid_product_params }, as: :turbo_stream
     end
-  
+
     assert_response :success
-    assert_includes @response.body, "turbo-stream"
-    assert_includes @response.body, "new_product"
+    assert_match(/<turbo-stream action="replace" target="new_product">/, @response.body)
   end
 
   test "create fails" do
@@ -76,9 +88,9 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
   test "update responds with turbo_stream on failure" do
     product = create(:product)
-  
+
     put product_path(product), params: { product: { name: nil } }, as: :turbo_stream
-  
+
     assert_response :success
     assert_includes @response.body, "turbo-stream"
     assert_includes @response.body, "product_#{product.id}"
@@ -106,9 +118,9 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   test "destroy responds with turbo_stream (not last product)" do
     create(:product)
     product = create(:product)
-  
+
     delete product_path(product), as: :turbo_stream
-  
+
     assert_response :success
     assert_includes @response.body, "turbo-stream"
     assert_includes @response.body, "remove"
