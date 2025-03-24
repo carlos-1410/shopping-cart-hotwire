@@ -20,10 +20,10 @@ export default class extends Controller {
   }
 
   render() {
-    this.discountTarget.innerText = formatCurrency(this.discountValue);
+    this.discountTarget.innerHTML = formatCurrency(this.discountValue);
 
     const final = Math.max(this.totalValue - this.discountValue, 0);
-    this.finalTarget.innerText = formatCurrency(final);
+    this.finalTarget.innerHTML = formatCurrency(final);
 
     const slider = this.element.querySelector('input[type="range"]');
     if (slider) slider.value = this.discountValue;
