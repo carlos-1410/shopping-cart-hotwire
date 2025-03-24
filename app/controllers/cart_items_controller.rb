@@ -4,7 +4,7 @@ class CartItemsController < ApplicationController
   include ApplicationHelper
 
   def index
-    @cart_items = CartItem.includes(:product).where(cart_id: @cart.id).order(created_at: :asc)
+    @cart_items = CartItem.eager_load(:product).where(cart_id: @cart.id).order(created_at: :asc)
   end
 
   def upsert # rubocop:disable Metrics/AbcSize

@@ -72,6 +72,6 @@ class ProductsController < ApplicationController
   end
 
   def product_attributes
-    params.require(:product).permit(:name, :vendor, :price_in_dollars, :image)
+    params.expect(product: [:name, :vendor, :price_in_dollars, :image])
   end
 end
