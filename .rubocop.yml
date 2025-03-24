@@ -2,8 +2,8 @@ require:
   - rubocop-rails
 
 AllCops:
-  TargetRubyVersion: 3.3.3
-  TargetRailsVersion: 7.0.8.1
+  TargetRubyVersion: 3.4.2
+  TargetRailsVersion: 8.0.2
   SuggestExtensions: false
   Exclude:
     - db/**/*
